@@ -1,9 +1,15 @@
 import numpy as np
-import pygame as pg
+import pygame
 import random
 
 size = int(input())
 count = 0
+
+pygame.init()
+window = pygame.display.set_mode((1920,1080))
+pygame.display.set_caption('Minesweeper')
+pygame.font.init()
+
 
 def defineBomb(x, y):
   if(field[x][y] == 0):
