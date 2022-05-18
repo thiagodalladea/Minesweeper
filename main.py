@@ -1,8 +1,12 @@
 import sys, pygame, random
 import numpy as np
+import beginner
+import intermediate
+import expert
 
-size = 9
-count = 0
+field9 = np.zeros((9,9), dtype=np.int8)
+field16 = np.zeros((16,16), dtype=np.int8)
+field30 = np.zeros((30,30), dtype=np.int8)
 
 pygame.init()
 window = pygame.display.set_mode((1920,1080))
@@ -18,151 +22,157 @@ DARK_GRAY = (80,80,80)
 BLACK = (0,0,0)
 
 #---------- MAKING THE GAME FIELD ----------#
-def defineBomb(x, y):
-  if(field[x][y] == 0):
-    field[x][y] = -1
-  else:
-    defineBomb(random.randint(0,size-1), random.randint(0,size-1))
+def makeField(sz):
+  size = int(sz)
+  count = 0
 
-field = np.zeros((size,size), dtype=np.int8)
+  def defineBomb(x, y):
+    if(field[x][y] == 0):
+      field[x][y] = -1
+    else:
+      defineBomb(random.randint(0,size-1), random.randint(0,size-1))
 
-if(size == 9):
-  for i in range(10):
-    defineBomb(random.randint(0,size-1), random.randint(0,size-1))
-elif(size == 16):
-  for i in range(40):
-    defineBomb(random.randint(0,size-1), random.randint(0,size-1))
-elif(size == 30):
-  for i in range(150):
-    defineBomb(random.randint(0,size-1), random.randint(0,size-1))
+  field = np.zeros((size,size), dtype=np.int8)
 
-for i in range(size):
-  for j in range(size):
-    if(field[i][j] != -1):
-      if(i != 0 and j != 0 and i != size-1 and j != size-1):
-        if(field[i-1][j-1] == -1):
-          count += 1
-        if(field[i][j-1] == -1):
-          count += 1
-        if(field[i+1][j-1] == -1):
-          count += 1
-        if(field[i-1][j] == -1):
-          count += 1
-        if(field[i+1][j] == -1):
-          count += 1
-        if(field[i-1][j+1] == -1):
-          count += 1
-        if(field[i][j+1] == -1):
-          count += 1
-        if(field[i+1][j+1] == -1):
-          count += 1
+  if(size == 9):
+    for i in range(10):
+      defineBomb(random.randint(0,size-1), random.randint(0,size-1))
+  elif(size == 16):
+    for i in range(40):
+      defineBomb(random.randint(0,size-1), random.randint(0,size-1))
+  elif(size == 30):
+    for i in range(150):
+      defineBomb(random.randint(0,size-1), random.randint(0,size-1))
 
-        field[i][j] = count
-        count = 0
-        
-      elif(i == 0 and j == 0):
-        if(field[i][j+1] == -1):
-          count += 1
-        if(field[i+1][j+1] == -1):
-          count += 1
-        if(field[i+1][j] == -1):
-          count += 1
+  for i in range(size):
+    for j in range(size):
+      if(field[i][j] != -1):
+        if(i != 0 and j != 0 and i != size-1 and j != size-1):
+          if(field[i-1][j-1] == -1):
+            count += 1
+          if(field[i][j-1] == -1):
+            count += 1
+          if(field[i+1][j-1] == -1):
+            count += 1
+          if(field[i-1][j] == -1):
+            count += 1
+          if(field[i+1][j] == -1):
+            count += 1
+          if(field[i-1][j+1] == -1):
+            count += 1
+          if(field[i][j+1] == -1):
+            count += 1
+          if(field[i+1][j+1] == -1):
+            count += 1
 
-        field[i][j] = count
-        count = 0
+          field[i][j] = count
+          count = 0
+          
+        elif(i == 0 and j == 0):
+          if(field[i][j+1] == -1):
+            count += 1
+          if(field[i+1][j+1] == -1):
+            count += 1
+          if(field[i+1][j] == -1):
+            count += 1
 
-      elif(i == 0 and j == size-1):
-        if(field[i][j-1] == -1):
-          count += 1
-        if(field[i+1][j-1] == -1):
-          count += 1
-        if(field[i+1][j] == -1):
-          count += 1
+          field[i][j] = count
+          count = 0
 
-        field[i][j] = count
-        count = 0
-        
-      elif(i == size-1 and j == 0):
-        if(field[i-1][j] == -1):
-          count += 1
-        if(field[i-1][j+1] == -1):
-          count += 1
-        if(field[i][j+1] == -1):
-          count += 1
+        elif(i == 0 and j == size-1):
+          if(field[i][j-1] == -1):
+            count += 1
+          if(field[i+1][j-1] == -1):
+            count += 1
+          if(field[i+1][j] == -1):
+            count += 1
 
-        field[i][j] = count
-        count = 0
-        
-      elif(i == size-1 and j == size-1):
-        if(field[i-1][j] == -1):
-          count += 1
-        if(field[i-1][j-1] == -1):
-          count += 1
-        if(field[i][j-1] == -1):
-          count += 1
+          field[i][j] = count
+          count = 0
+          
+        elif(i == size-1 and j == 0):
+          if(field[i-1][j] == -1):
+            count += 1
+          if(field[i-1][j+1] == -1):
+            count += 1
+          if(field[i][j+1] == -1):
+            count += 1
 
-        field[i][j] = count
-        count = 0
-        
-      elif(i == 0):
-        if(field[i][j-1] == -1):
-          count += 1
-        if(field[i+1][j-1] == -1):
-          count += 1
-        if(field[i+1][j] == -1):
-          count += 1
-        if(field[i+1][j+1] == -1):
-          count += 1
-        if(field[i][j+1] == -1):
-          count += 1
+          field[i][j] = count
+          count = 0
+          
+        elif(i == size-1 and j == size-1):
+          if(field[i-1][j] == -1):
+            count += 1
+          if(field[i-1][j-1] == -1):
+            count += 1
+          if(field[i][j-1] == -1):
+            count += 1
 
-        field[i][j] = count
-        count = 0
+          field[i][j] = count
+          count = 0
+          
+        elif(i == 0):
+          if(field[i][j-1] == -1):
+            count += 1
+          if(field[i+1][j-1] == -1):
+            count += 1
+          if(field[i+1][j] == -1):
+            count += 1
+          if(field[i+1][j+1] == -1):
+            count += 1
+          if(field[i][j+1] == -1):
+            count += 1
 
-      elif(i == size-1):
-        if(field[i][j-1] == -1):
-          count += 1
-        if(field[i-1][j-1] == -1):
-          count += 1
-        if(field[i-1][j] == -1):
-          count += 1
-        if(field[i-1][j+1] == -1):
-          count += 1
-        if(field[i][j+1] == -1):
-          count += 1
+          field[i][j] = count
+          count = 0
 
-        field[i][j] = count
-        count = 0
+        elif(i == size-1):
+          if(field[i][j-1] == -1):
+            count += 1
+          if(field[i-1][j-1] == -1):
+            count += 1
+          if(field[i-1][j] == -1):
+            count += 1
+          if(field[i-1][j+1] == -1):
+            count += 1
+          if(field[i][j+1] == -1):
+            count += 1
 
-      elif(j == 0):
-        if(field[i-1][j] == -1):
-          count += 1
-        if(field[i-1][j+1] == -1):
-          count += 1
-        if(field[i][j+1] == -1):
-          count += 1
-        if(field[i+1][j+1] == -1):
-          count += 1
-        if(field[i+1][j] == -1):
-          count += 1
+          field[i][j] = count
+          count = 0
 
-        field[i][j] = count
-        count = 0
+        elif(j == 0):
+          if(field[i-1][j] == -1):
+            count += 1
+          if(field[i-1][j+1] == -1):
+            count += 1
+          if(field[i][j+1] == -1):
+            count += 1
+          if(field[i+1][j+1] == -1):
+            count += 1
+          if(field[i+1][j] == -1):
+            count += 1
 
-      elif(j == size-1):
-        if(field[i-1][j] == -1):
-          count += 1
-        if(field[i-1][j-1] == -1):
-          count += 1
-        if(field[i][j-1] == -1):
-          count += 1
-        if(field[i+1][j-1] == -1):
-          count += 1
-        if(field[i+1][j] == -1):
-          count += 1
+          field[i][j] = count
+          count = 0
 
-        field[i][j] = count
-        count = 0
+        elif(j == size-1):
+          if(field[i-1][j] == -1):
+            count += 1
+          if(field[i-1][j-1] == -1):
+            count += 1
+          if(field[i][j-1] == -1):
+            count += 1
+          if(field[i+1][j-1] == -1):
+            count += 1
+          if(field[i+1][j] == -1):
+            count += 1
+
+          field[i][j] = count
+          count = 0
+
+  return field
 #---------- END OF MAKING THE GAME FIELD ----------#
 
 #---------- COLORIZE WHEN MOUSE IS ABOVE THE CONTAINER ----------#
@@ -256,44 +266,53 @@ def start():
           pygame.quit()
           sys.exit()
     
-    mouseX, mouseY = pygame.mouse.get_pos()
-    if((mouseX >= 287 and mouseX <= 662) and (mouseY >= 455 and mouseY <= 830)):
-      colorRect(1)
-    else:
-      pygame.draw.rect(window, GRAY, pygame.Rect(287,455,375,375), 0, 30)
-      pygame.draw.rect(window, BLACK, pygame.Rect(287,455,375,375), 3, 30)
-      beg_text = font_50.render('Beginner', True, BLACK)
-      begSize_text = font_120.render('9x9', True, BLACK)
-      beg_rect = beg_text.get_rect(center=(475,495))
-      begSize_rect = begSize_text.get_rect(center=(475,642))
-      window.blit(beg_text,beg_rect)
-      window.blit(begSize_text,begSize_rect)
+      mouseX, mouseY = pygame.mouse.get_pos()
+      if((mouseX >= 287 and mouseX <= 662) and (mouseY >= 455 and mouseY <= 830)):
+        colorRect(1)
+        if event.type == pygame.MOUSEBUTTONUP:
+          field9 = makeField(9)
+          beginner.beginnerGame(field9)
+      else:
+        pygame.draw.rect(window, GRAY, pygame.Rect(287,455,375,375), 0, 30)
+        pygame.draw.rect(window, BLACK, pygame.Rect(287,455,375,375), 3, 30)
+        beg_text = font_50.render('Beginner', True, BLACK)
+        begSize_text = font_120.render('9x9', True, BLACK)
+        beg_rect = beg_text.get_rect(center=(475,495))
+        begSize_rect = begSize_text.get_rect(center=(475,642))
+        window.blit(beg_text,beg_rect)
+        window.blit(begSize_text,begSize_rect)
 
-    if((mouseX >= 772 and mouseX <= 1147) and (mouseY >= 455 and mouseY <= 830)):
-      colorRect(2)
-    else:
-      pygame.draw.rect(window, GRAY, pygame.Rect(772,455,375,375), 0, 30)
-      pygame.draw.rect(window, BLACK, pygame.Rect(772,455,375,375), 3, 30)
-      int_text = font_50.render('Intermediate', True, BLACK)
-      intSize_text = font_120.render('16x16', True, BLACK)
-      int_rect = int_text.get_rect(center=(960,495))
-      intSize_rect = intSize_text.get_rect(center=(960,642))
-      window.blit(int_text,int_rect)
-      window.blit(intSize_text,intSize_rect)
+      if((mouseX >= 772 and mouseX <= 1147) and (mouseY >= 455 and mouseY <= 830)):
+        colorRect(2)
+        if event.type == pygame.MOUSEBUTTONUP:
+          field16 = makeField(16)
+          intermediate.intermediateGame(field16)
+      else:
+        pygame.draw.rect(window, GRAY, pygame.Rect(772,455,375,375), 0, 30)
+        pygame.draw.rect(window, BLACK, pygame.Rect(772,455,375,375), 3, 30)
+        int_text = font_50.render('Intermediate', True, BLACK)
+        intSize_text = font_120.render('16x16', True, BLACK)
+        int_rect = int_text.get_rect(center=(960,495))
+        intSize_rect = intSize_text.get_rect(center=(960,642))
+        window.blit(int_text,int_rect)
+        window.blit(intSize_text,intSize_rect)
 
-    if((mouseX >= 1257 and mouseX <= 1632) and (mouseY >= 455 and mouseY <= 830)):
-      colorRect(3)
-    else:
-      pygame.draw.rect(window, GRAY, pygame.Rect(1257,455,375,375), 0, 30)
-      pygame.draw.rect(window, BLACK, pygame.Rect(1257,455,375,375), 3, 30)
-      exp_text = font_50.render('Expert', True, BLACK)
-      expSize_text = font_120.render('30x30', True, BLACK)
-      exp_rect = exp_text.get_rect(center=(1445,495))
-      expSize_rect = expSize_text.get_rect(center=(1445,642))
-      window.blit(exp_text,exp_rect)
-      window.blit(expSize_text,expSize_rect)
+      if((mouseX >= 1257 and mouseX <= 1632) and (mouseY >= 455 and mouseY <= 830)):
+        colorRect(3)
+        if event.type == pygame.MOUSEBUTTONUP:
+          field30 = makeField(30)
+          expert.expertGame(field30)
+      else:
+        pygame.draw.rect(window, GRAY, pygame.Rect(1257,455,375,375), 0, 30)
+        pygame.draw.rect(window, BLACK, pygame.Rect(1257,455,375,375), 3, 30)
+        exp_text = font_50.render('Expert', True, BLACK)
+        expSize_text = font_120.render('30x30', True, BLACK)
+        exp_rect = exp_text.get_rect(center=(1445,495))
+        expSize_rect = expSize_text.get_rect(center=(1445,642))
+        window.blit(exp_text,exp_rect)
+        window.blit(expSize_text,expSize_rect)
 
-    pygame.display.flip()
+      pygame.display.flip()
 #---------- END OF MAIN ----------#
 
 start() 
