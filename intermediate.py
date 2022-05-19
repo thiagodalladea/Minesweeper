@@ -26,5 +26,5 @@ def intermediateGame(fd):
                     pygame.quit()
                     sys.exit()
 
-        window.fill(BLACK)
+        window.fill(GRAY)
         pygame.display.update()

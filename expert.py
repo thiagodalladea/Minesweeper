@@ -1,3 +1,4 @@
+from matplotlib.pyplot import gray
 import numpy as np
 import pygame, sys
 
@@ -26,5 +27,5 @@ def expertGame(fd):
                     pygame.quit()
                     sys.exit()
 
-        window.fill(BLACK)
+        window.fill(GRAY)
         pygame.display.update()
