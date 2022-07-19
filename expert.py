@@ -15,6 +15,8 @@ def expertGame(fd):
     run = True
     field = fd
 
+    print('expert')
+
     while(run):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

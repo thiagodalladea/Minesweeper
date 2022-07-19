@@ -14,6 +14,8 @@ def intermediateGame(fd):
     run = True
     field = fd
 
+    print('intermediate')
+
     while(run):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

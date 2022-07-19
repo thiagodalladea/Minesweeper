@@ -210,7 +210,7 @@ def colorRect(pos):
   pygame.display.flip()
 #---------- END OF COLORIZE WHEN MOUSE IS ABOVE THE CONTAINER ----------#
 
-#---------- MAIN ----------#
+#---------- MAIN (start) ----------#
 def start():
   run = True
 
@@ -275,10 +275,6 @@ def start():
       else:
         pygame.draw.rect(window, GRAY, pygame.Rect(287,455,375,375), 0, 30)
         pygame.draw.rect(window, BLACK, pygame.Rect(287,455,375,375), 3, 30)
-        beg_text = font_50.render('Beginner', True, BLACK)
-        begSize_text = font_120.render('9x9', True, BLACK)
-        beg_rect = beg_text.get_rect(center=(475,495))
-        begSize_rect = begSize_text.get_rect(center=(475,642))
         window.blit(beg_text,beg_rect)
         window.blit(begSize_text,begSize_rect)
 
@@ -290,10 +286,6 @@ def start():
       else:
         pygame.draw.rect(window, GRAY, pygame.Rect(772,455,375,375), 0, 30)
         pygame.draw.rect(window, BLACK, pygame.Rect(772,455,375,375), 3, 30)
-        int_text = font_50.render('Intermediate', True, BLACK)
-        intSize_text = font_120.render('16x16', True, BLACK)
-        int_rect = int_text.get_rect(center=(960,495))
-        intSize_rect = intSize_text.get_rect(center=(960,642))
         window.blit(int_text,int_rect)
         window.blit(intSize_text,intSize_rect)
 
@@ -305,10 +297,6 @@ def start():
       else:
         pygame.draw.rect(window, GRAY, pygame.Rect(1257,455,375,375), 0, 30)
         pygame.draw.rect(window, BLACK, pygame.Rect(1257,455,375,375), 3, 30)
-        exp_text = font_50.render('Expert', True, BLACK)
-        expSize_text = font_120.render('30x30', True, BLACK)
-        exp_rect = exp_text.get_rect(center=(1445,495))
-        expSize_rect = expSize_text.get_rect(center=(1445,642))
         window.blit(exp_text,exp_rect)
         window.blit(expSize_text,expSize_rect)
 

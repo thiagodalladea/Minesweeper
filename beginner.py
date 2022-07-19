@@ -2,7 +2,6 @@ import numpy as np
 import pygame, sys
 
 field = np.zeros((9,9), dtype=np.int8)
-
 pygame.init()
 window = pygame.display.set_mode((1920,1080))
 
@@ -13,6 +12,9 @@ BLACK = (0,0,0)
 def beginnerGame(fd):
     run = True
     field = fd
+
+    window.fill(GRAY)
+    pygame.draw.rect(window, BLACK, pygame.Rect(910,255,50,50), 1)
 
     while(run):
         for event in pygame.event.get():
@@ -26,5 +28,4 @@ def beginnerGame(fd):
                     pygame.quit()
                     sys.exit()
 
-        window.fill(GRAY)
         pygame.display.update()
