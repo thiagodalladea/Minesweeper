@@ -45,5 +45,16 @@ class Home():
             for event in pygame.event.get():
                 if(event.type == pygame.QUIT):
                     run = False
+                mouseX, mouseY = pygame.mouse.get_pos()
+                if(mouseX >= 150 and mouseX <= 350):
+                    if(mouseY >= 200 and mouseY <= 250):
+                        if event.type == pygame.MOUSEBUTTONUP:
+                            print('clicked 9x9')
+                    elif(mouseY >= 275 and mouseY <= 325):
+                        if event.type == pygame.MOUSEBUTTONUP:
+                            print('clicked 16x16')
+                    elif(mouseY >= 350 and mouseY <= 400):
+                        if event.type == pygame.MOUSEBUTTONUP:
+                            print('clicked 30x16')
             pygame.display.flip()
         pygame.quit()
